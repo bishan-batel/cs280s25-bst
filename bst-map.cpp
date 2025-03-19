@@ -1,6 +1,12 @@
+#ifndef BSTMAP_H
 #include "bst-map.h"
+#endif
+
+#ifndef BSTMAP_CPP
+#define BSTMAP_CPP
 
 #include <iostream>
+
 namespace CS280 {
 
   // static data members
@@ -14,9 +20,10 @@ namespace CS280 {
   // method's name and return value have to be fully qualified with
   // all required namespace and class names (like BSTmap<K,V>::BSTmap)
   // but the argument list does not have to be:
-  // function argument list automatically falls into the method's namespace (Koenig lookup)
+  // function argument list automatically falls into the method's namespace
+  // (Koenig lookup)
   template<typename K, typename V>
-  BSTmap<K, V>::BSTmap(const BSTmap &rhs) {
+  BSTmap<K, V>::BSTmap(const BSTmap& rhs) {
     // ...
   }
 
@@ -24,10 +31,7 @@ namespace CS280 {
   // typename is used to help compiler to parse
   template<typename K, typename V>
   auto BSTmap<K, V>::begin() -> iterator {
-    if (pRoot)
-      return iterator{pRoot->first()};
-    else
-      return end_it;
+    return pRoot ? iterator{pRoot->first()} : end_it;
   }
 
   ////////////////////////////////////////////////////////////
@@ -36,12 +40,14 @@ namespace CS280 {
    * used in print_backwards_padded
    */
   template<typename K, typename V>
-  auto BSTmap<K, V>::getedgesymbol(const Node *node) const -> char {
-    const Node *parent = node->parent;
-    if (parent == nullptr)
+  auto BSTmap<K, V>::getedgesymbol(const Node* node) const -> char {
+    const Node* parent = node->parent;
+
+    if (parent == nullptr) {
       return '-';
-    else
-      return (parent->left == node) ? '\\' : '/';
+    }
+
+    return parent->left == node ? '\\' : '/';
   }
 
   /* this is another "ASCII-graphical" print, but using
@@ -49,15 +55,15 @@ namespace CS280 {
    * Left branch of the tree is at the bottom
    */
   template<typename K, typename V>
-  auto operator<<(std::ostream &os, BSTmap<K, V> const &map) -> std::ostream & {
+  auto operator<<(std::ostream& os, const BSTmap<K, V>& map) -> std::ostream& {
     map.print(os);
     return os;
   }
 
   template<typename K, typename V>
-  auto BSTmap<K, V>::print(std::ostream &os, bool print_value) const -> void {
+  auto BSTmap<K, V>::print(std::ostream& os, bool print_value) const -> void {
     if (pRoot) {
-      BSTmap<K, V>::Node *b = pRoot->last();
+      BSTmap<K, V>::Node* b = pRoot->last();
       while (b) {
         int depth = getdepth(b);
         int i;
@@ -66,7 +72,9 @@ namespace CS280 {
         char edge = getedgesymbol(b);
         switch (edge) {
           case '-':
-            for (i = 0; i < depth; ++i) std::printf("       ");
+            for (i = 0; i < depth; ++i) {
+              std::printf("       ");
+            }
             os << b->key;
             if (print_value) {
               os << " -> " << b->value;
@@ -74,9 +82,13 @@ namespace CS280 {
             os << std::endl;
             break;
           case '\\':
-            for (i = 0; i < depth; ++i) std::printf("       ");
+            for (i = 0; i < depth; ++i) {
+              std::printf("       ");
+            }
             os << edge << std::endl;
-            for (i = 0; i < depth; ++i) std::printf("       ");
+            for (i = 0; i < depth; ++i) {
+              std::printf("       ");
+            }
             os << b->key;
             if (print_value) {
               os << " -> " << b->value;
@@ -84,13 +96,17 @@ namespace CS280 {
             os << std::endl;
             break;
           case '/':
-            for (i = 0; i < depth; ++i) std::printf("       ");
+            for (i = 0; i < depth; ++i) {
+              std::printf("       ");
+            }
             os << b->key;
             if (print_value) {
               os << " -> " << b->value;
             }
             os << std::endl;
-            for (i = 0; i < depth; ++i) std::printf("       ");
+            for (i = 0; i < depth; ++i) {
+              std::printf("       ");
+            }
             os << edge << std::endl;
             break;
         }
@@ -100,3 +116,5 @@ namespace CS280 {
     std::printf("\n");
   }
 } // namespace CS280
+
+#endif
