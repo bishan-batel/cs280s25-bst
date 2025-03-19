@@ -10,8 +10,7 @@ set(CMAKE_C_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}
 set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
 
 # Compile Options
-add_compile_options(-Wall -Wextra -ansi -pedantic -Wunused)
+add_compile_options( -Wall -Wextra -std=c++17 -Wold-style-cast -Woverloaded-virtual -Wsign-promo  -Wctor-dtor-privacy -Wnon-virtual-dtor  -Weffc++ -pedantic)
 
 # files to compile
-set(SOURCE_FILES  assignment.c  )
-add_executable(driver_c SOURCE_FILES)
+add_executable(driver_c driver.cpp)
