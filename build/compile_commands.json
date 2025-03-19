@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/bishan_/code/digipen/cs280/bst/build",
-  "command": "/nix/store/3ix5h74n7ar9950vwzp4dxmil70pmx0k-gcc-wrapper-13.3.0/bin/g++ -isystem /nix/store/px2nj16i5gc3d4mnw5l1nclfdxhry61p-python3-3.12.7/include -isystem /nix/store/z327i0kyk1k0nq5qlyp5a03xnhdha36x-valgrind-3.23.0-dev/include -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0 -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include/c++/13.3.0/backward -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/include -isystem /nix/store/xzfmarrq8x8s4ivpya24rrndqsq2ndiz-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include-fixed -isystem /nix/store/aax0hx68i2ikhpf27hdm6a2a209d4s6p-glibc-2.40-36-dev/include -std=c++11 -Wall -Wextra -std=c++17 -Wold-style-cast -Woverloaded-virtual -Wsign-promo -Wctor-dtor-privacy -Wnon-virtual-dtor -Weffc++ -pedantic -o CMakeFiles/driver_c.dir/driver.cpp.o -c /home/bishan_/code/digipen/cs280/bst/driver.cpp",
-  "file": "/home/bishan_/code/digipen/cs280/bst/driver.cpp",
-  "output": "CMakeFiles/driver_c.dir/driver.cpp.o"
-}
-]
