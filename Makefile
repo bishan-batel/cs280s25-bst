@@ -1,7 +1,7 @@
 PRG=gnu.exe
 
 GCC=g++
-GCCFLAGS=-Wall -Wextra -std=c++17 -Wold-style-cast -Woverloaded-virtual -Wsign-promo  -Wctor-dtor-privacy -Wnon-virtual-dtor  -Weffc++ -pedantic
+GCCFLAGS=-Wall -Wextra -std=c++17 -Wold-style-cast -Woverloaded-virtual -Wsign-promo  -Wctor-dtor-privacy -Wnon-virtual-dtor  -Weffc++ -pedantic -g
 GCCOPTIMIZE=-O3
 OBJECTS0= #bst-map.cpp
 DRIVER0=driver.cpp

@@ -3,94 +3,105 @@
 #include <iterator> // stream iterator
 #include <numeric>  // iota
 
-
 #include "bst-map.h"
 #include <iostream>
 #include <vector>
-#include <cstdlib> 
-#include <string> 
+#include <cstdlib>
+#include <string>
 
-void simple_inserts( CS280::BSTmap<int,int> & map, std::vector<int> const& data ) {
-    //insert (using index operator) and perform sanity check each time
-    for ( int const & key : data ) {
-        map[ key ] = key*key; //value is not important
-        // if you have the method below, uncomment next line
-        // if (!map.sanityCheck()) std::cout << "Error\n";
-    }
+void simple_inserts(
+  CS280::BSTmap<int, int>& map,
+  const std::vector<int>& data
+) {
+  // insert (using index operator) and perform sanity check each time
+  for (const int& key: data) {
+    map[key] = key * key; // value is not important
+    // if you have the method below, uncomment next line
+    // if (!map.sanityCheck()) std::cout << "Error\n";
+  }
 }
 
 void test0() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data {1,2,3,4,5};
-    simple_inserts( map, data );
-    std::cout << map << std::endl;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{1, 2, 3, 4, 5};
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
 }
+
 void test1() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data  {5,4,3,2,1};
-    simple_inserts( map, data );
-    std::cout << map << std::endl;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{5, 4, 3, 2, 1};
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
 }
+
 void test2() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data {3,4,1,5,2};
-    simple_inserts( map, data );
-    std::cout << map << std::endl;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{3, 4, 1, 5, 2};
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
 }
+
 ////////////////////////////////////////////////
 // implement basics of the iterator
 // and find
 
-void simple_finds( CS280::BSTmap<int,int> & map, std::vector<int> const& data ) {
-    //insert all and perform sanity check each time
-    for ( int const & key : data ) {
-        CS280::BSTmap<int,int>::iterator it = map.find( key );
-        if ( it == map.end() ) {
-            std::cout << "cannot find value " << key << std::endl;
-        }
+void simple_finds(CS280::BSTmap<int, int>& map, const std::vector<int>& data) {
+  // insert all and perform sanity check each time
+  for (const int& key: data) {
+    CS280::BSTmap<int, int>::iterator it = map.find(key);
+    if (it == map.end()) {
+      std::cout << "cannot find value " << key << std::endl;
     }
+  }
 }
+
 void test3() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data {3,4,1,5,2};
-    simple_inserts( map, data );
-    simple_finds( map, data );
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{3, 4, 1, 5, 2};
+  simple_inserts(map, data);
+  simple_finds(map, data);
 }
+
 ////////////////////////////////////////////////
 // implement delete
-void simple_deletes( CS280::BSTmap<int,int> & map, std::vector<int> const& data ) {
-    //insert all and perform sanity check each time
-    for ( int const & key : data ) {
-        CS280::BSTmap<int,int>::iterator it = map.find( key );
-        if ( it == map.end() ) {
-            std::cout << "cannot find value " << key << std::endl;
-        } else {
-            map.erase( it );
-            // if you have the method below, uncomment next line
-            // if (!map.sanityCheck()) std::cout << "Error\n";
-        }
-    }
+void simple_deletes(
+  CS280::BSTmap<int, int>& map,
+  const std::vector<int>& data
+) {
+  // insert all and perform sanity check each time
+  for (const int& key: data) {
+    CS280::BSTmap<int, int>::iterator it = map.find(key);
 
-    //    std::cout << "--------------------\n" << map << std::endl;
+    if (it == map.end()) {
+      std::cout << "cannot find value " << key << std::endl;
+    } else {
+      map.erase(it);
+      // if you have the method below, uncomment next line
+      // if (!map.sanityCheck()) std::cout << "Error\n";
+    }
+  }
+
+  //    std::cout << "--------------------\n" << map << std::endl;
 }
 
 void test4() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data {3,4,1,5,2};
-    simple_inserts( map, data );
-    std::cout << map << std::endl;
-    simple_deletes( map, data ); // delete in the same order as insert
-    std::cout << map << std::endl;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{3, 4, 1, 5, 2};
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
+  simple_deletes(map, data); // delete in the same order as insert
+  std::cout << map << std::endl;
 }
 
 void test5() {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data {3,4,1,5,2};
-    simple_inserts( map, data);
-    std::cout << map << std::endl;
-    std::vector<int> data_rev( data.rbegin(), data.rend() );
-    simple_deletes( map, data_rev ); // delete in reverse order
-    std::cout << map << std::endl;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data{3, 4, 1, 5, 2};
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
+  std::vector<int> data_rev(data.rbegin(), data.rend());
+  simple_deletes(map, data_rev); // delete in reverse order
+  std::cout << map << std::endl;
 }
 
 ////////////////////////////////////////////////
@@ -102,19 +113,20 @@ void test5() {
 // try larger N
 // check with Dr. Memory - better catch error now
 void test6() {
-    int N = 100;
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );
-    std::iota( data.begin(), data.end(), 1 );
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
+  // int N = 100;
+  // CS280::BSTmap<int, int> map;
+  // std::vector<int> data(N);
+  // std::iota(data.begin(), data.end(), 1);
+  // std::shuffle(data.begin(), data.end(),
+  // std::mt19937{std::random_device{}()});
 
-    simple_inserts( map, data);
-    std::cout << map << std::endl;
+  // simple_inserts(map, data);
+  // std::cout << map << std::endl;
 
-    // reshuffle data
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
-    simple_deletes( map, data ); // delete in reverse order
-    std::cout << map << std::endl;
+  //// reshuffle data
+  // std::shuffle(data.begin(), data.end(),
+  // std::mt19937{std::random_device{}()}); simple_deletes(map, data); // delete
+  // in reverse order std::cout << map << std::endl;
 }
 
 ////////////////////////////////////////////////
@@ -122,45 +134,78 @@ void test6() {
 // now mix inserts and deletes
 // test is randomized, so no output provided:
 // check for crashes, check with valgrind
-void inserts_delete_random( int N, int num_iter, 
-        int min_number_to_insert, int max_number_to_insert, //min_number_to_insert < max_number_to_insert
-        float ratio_to_delete, // 0..1
-        bool perform_checks // false - speed only, true - mostly correctness
-        ) {
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );   // data to insert (i.e. NOT in the map )
-    std::iota( data.begin(), data.end(), 1 );
-    std::vector<int> map_content; // initially empty 
+void inserts_delete_random(
+  int N,
+  int num_iter,
+  int min_number_to_insert,
+  int max_number_to_insert, // min_number_to_insert < max_number_to_insert
+  float ratio_to_delete,    // 0..1
+  bool perform_checks       // false - speed only, true - mostly correctness
+) {
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N);     // data to insert (i.e. NOT in the map )
+  std::iota(data.begin(), data.end(), 1);
+  std::vector<int> map_content; // initially empty
 
+  for (int i = 0; i < num_iter; ++i) {
+    // insert some number of elements
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    // number of elements to insert, min of
+    std::uniform_int_distribution<unsigned int> dis(
+      min_number_to_insert,
+      max_number_to_insert
+    );
+    unsigned int num_insert = dis(gen);
+    if (num_insert > data.size()) {
+      num_insert = data.size();
+    }
 
-    for ( int i=0; i<num_iter; ++i ) {
-        // insert some number of elements
-        std::random_device                      rd;
-        std::mt19937                            gen( rd() );
-        // number of elements to insert, min of 
-        std::uniform_int_distribution<unsigned int>      dis( min_number_to_insert, max_number_to_insert );
-        unsigned int num_insert = dis( gen );
-        if ( num_insert > data.size() ) { num_insert = data.size(); }
+    //        std::cout << "insert " << num_insert << " elements\n";
 
-//        std::cout << "insert " << num_insert << " elements\n";
+    // insert from the back of shuffled data
+    std::shuffle(
+      data.begin(),
+      data.end(),
+      std::mt19937{std::random_device{}()}
+    );
+    //        std::copy( data.begin() + data.size() - num_insert, data.end(),
+    //        std::ostream_iterator<int>(std::cout, " ")); std::cout << "\n";
+    simple_inserts(
+      map,
+      std::vector<int>(data.begin() + data.size() - num_insert, data.end())
+    );
+    map_content.insert(
+      map_content.end(),
+      data.begin() + data.size() - num_insert,
+      data.end()
+    );
+    data.resize(data.size() - num_insert);
 
-        // insert from the back of shuffled data
-        std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
-//        std::copy( data.begin() + data.size() - num_insert, data.end(), std::ostream_iterator<int>(std::cout, " "));
-//        std::cout << "\n";
-        simple_inserts( map, std::vector<int>( data.begin() + data.size() - num_insert, data.end() ) );
-        map_content.insert( map_content.end(), data.begin() + data.size() - num_insert, data.end() );
-        data.resize( data.size() - num_insert );
-
-        int num_delete = num_insert * ratio_to_delete;
-//        std::cout << "delete " << num_delete << " elements\n";
-        // delete some
-        std::shuffle( map_content.begin(), map_content.end(), std::mt19937{std::random_device{}()} );
-//        std::copy( map_content.begin() + map_content.size() - num_delete, map_content.end(), std::ostream_iterator<int>(std::cout, " "));
-//        std::cout << "\n";
-        simple_deletes( map, std::vector<int>( map_content.begin() + map_content.size() - num_delete, map_content.end() ) );
-        data.insert( data.end(), map_content.begin() + map_content.size() - num_delete, map_content.end() );
-        map_content.resize( map_content.size() - num_delete );
+    int num_delete = num_insert * ratio_to_delete;
+    //        std::cout << "delete " << num_delete << " elements\n";
+    // delete some
+    std::shuffle(
+      map_content.begin(),
+      map_content.end(),
+      std::mt19937{std::random_device{}()}
+    );
+    //        std::copy( map_content.begin() + map_content.size() - num_delete,
+    //        map_content.end(), std::ostream_iterator<int>(std::cout, " "));
+    //        std::cout << "\n";
+    simple_deletes(
+      map,
+      std::vector<int>(
+        map_content.begin() + map_content.size() - num_delete,
+        map_content.end()
+      )
+    );
+    data.insert(
+      data.end(),
+      map_content.begin() + map_content.size() - num_delete,
+      map_content.end()
+    );
+    map_content.resize(map_content.size() - num_delete);
 
 #if 0
         std::cout << "BSTmap size " << map.size() << "\n";
@@ -168,38 +213,35 @@ void inserts_delete_random( int N, int num_iter,
         std::cout << map << "\n";
         std::cout << "---------------------------------------\n";
 #endif
-        if ( perform_checks and map.size() != map_content.size() ) {
-            std::cout << "Wrong size\n";
-        }
+    if (perform_checks and map.size() != map_content.size()) {
+      std::cout << "Wrong size\n";
+    }
+  }
+
+  if (perform_checks) {
+    // check all data is in a tree
+    for (const int& el: data) {
+      if (map.find(el) != map.end()) {
+        std::cout << "Error - found element that should not be in the tree\n";
+      }
     }
 
-    if ( perform_checks ) {
-        // check all data is in a tree
-        for ( int const& el :  data ) {
-            if ( map.find( el ) != map.end() ) {
-                std::cout << "Error - found element that should not be in the tree\n";
-            }
-        }
-
-        // check we can all data is in a tree
-        for ( int const& el :  map_content ) {
-            if ( map.find( el ) == map.end() ) {
-                std::cout << "Error - not found\n";
-            }
-        }
+    // check we can all data is in a tree
+    for (const int& el: map_content) {
+      if (map.find(el) == map.end()) {
+        std::cout << "Error - not found\n";
+      }
     }
+  }
 }
 
-void test7() {
-    inserts_delete_random( 1000, 10, 2, 12, 0.5, true );
-}
+void test7() { inserts_delete_random(1000, 10, 2, 12, 0.5, true); }
 
 ////////////////////////////////////////////////
 // testing index and some extra iterator features:
 // - preincrement, arrow
-void test8()
-{
-    std::string alice_in_wonderland = "CHAPTER I. Down the Rabbit-Hole Alice\
+void test8() {
+  std::string alice_in_wonderland = "CHAPTER I. Down the Rabbit-Hole Alice\
 was beginning to get very tired of sitting by her sister on the bank,\
 and of having nothing to do: once or twice she had peeped into the   \
 book her sister was reading, but it had no pictures or               \
@@ -338,222 +380,237 @@ she had never forgotten that, if you drink much from a               \
 bottle marked 'poison,' it is almost certain to                      \
 disagree with you, sooner or later.";
 
-    CS280::BSTmap<char, int> frequency;
+  CS280::BSTmap<char, int> frequency;
 
-    // frequency analysis
-    for ( char const& ch : alice_in_wonderland ) {
-        ++frequency[ ch ];
-    }
+  // frequency analysis
+  for (const char& ch: alice_in_wonderland) {
+    ++frequency[ch];
+  }
 
-    CS280::BSTmap<char, int>::iterator it   = frequency.begin();
-    CS280::BSTmap<char, int>::iterator it_e = frequency.end();
-    for ( ; it != it_e; ++it ) {
-        std::cout << it->Key() << " --> " << it->Value() << std::endl;
-    }
+  CS280::BSTmap<char, int>::iterator it = frequency.begin();
+  CS280::BSTmap<char, int>::iterator it_e = frequency.end();
+  for (; it != it_e; ++it) {
+    std::cout << it->Key() << " --> " << it->Value() << std::endl;
+  }
 }
 
 ////////////////////////////////////////////////
 // testing index and some extra iterator features:
 // - postincrement, dereferencing
-void test9()
-{
-    CS280::BSTmap<int, std::string> m;
+void test9() {
+  CS280::BSTmap<int, std::string> m;
 
-    m[3] = "root";
-    m[2] = "left child";
-    m[1] = "left-left grandchild";
-    m[5] = "right child";
-    m[4] = "right-left grandchild";
-    m[10] = "right-right grandchild";
+  m[3] = "root";
+  m[2] = "left child";
+  m[1] = "left-left grandchild";
+  m[5] = "right child";
+  m[4] = "right-left grandchild";
+  m[10] = "right-right grandchild";
 
-    m.print( std::cout, true );
+  m.print(std::cout, true);
 
-    CS280::BSTmap<int, std::string>::iterator it = m.find( 5 );
-    std::cout << (*it).Value() << std::endl;
-    std::cout << "after PRE-incr " << (*++it).Value() << std::endl; // should be next
-    std::cout << "------------------\n";
-    it = m.find( 5 );
-    std::cout << (*it).Value() << std::endl;
-    std::cout << "after POST-incr " << (*it++).Value() << std::endl; // should be same as above
-    std::cout << "after sequence point " << (*it).Value() << std::endl; // should be next
+  CS280::BSTmap<int, std::string>::iterator it = m.find(5);
+  std::cout << (*it).Value() << std::endl;
+  std::cout << "after PRE-incr " << (*++it).Value()
+            << std::endl; // should be next
+  std::cout << "------------------\n";
+  it = m.find(5);
+  std::cout << (*it).Value() << std::endl;
+  std::cout << "after POST-incr " << (*it++).Value()
+            << std::endl; // should be same as above
+  std::cout << "after sequence point " << (*it).Value()
+            << std::endl; // should be next
 }
 
 // copy ctor basic tests
 // expected output - none
-void test10()
-{
-    int N = 1000;
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );   // data to insert
-    std::iota( data.begin(), data.end(), 1 );
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
+void test10() {
+  int N = 1000;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N); // data to insert
+  std::iota(data.begin(), data.end(), 1);
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
 
-    // insert some number of elements between N/2 and N
-    std::random_device                              rd;
-    std::mt19937                                    gen( rd() );
-    std::uniform_int_distribution<unsigned int>     dis( N/2, N );
-    data.resize( dis( gen ) );
-    simple_inserts( map, data );
+  // insert some number of elements between N/2 and N
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<unsigned int> dis(N / 2, N);
+  data.resize(dis(gen));
+  simple_inserts(map, data);
 
-    // now copy the map
-    CS280::BSTmap<int,int> map2( map );
+  // now copy the map
+  CS280::BSTmap<int, int> map2(map);
 
-    // traverse original, find in copy
-    CS280::BSTmap<int, int>::iterator it   = map.begin();
-    CS280::BSTmap<int, int>::iterator it_e = map.end();
-    for ( ; it != it_e; ++it ) {
-        if ( map2.find( it->Key() ) == map2.end() ) {
-            std::cout << "Not found in a copy\n";
-        } else {
-            if ( map2.find( it->Key() )->Value() != it->Value() ) {
-                std::cout << "Found in a copy, but value is wrong\n";
-            }
-        }
+  // traverse original, find in copy
+  CS280::BSTmap<int, int>::iterator it = map.begin();
+  CS280::BSTmap<int, int>::iterator it_e = map.end();
+  for (; it != it_e; ++it) {
+    if (map2.find(it->Key()) == map2.end()) {
+      std::cout << "Not found in a copy\n";
+    } else {
+      if (map2.find(it->Key())->Value() != it->Value()) {
+        std::cout << "Found in a copy, but value is wrong\n";
+      }
     }
+  }
 
-    // traverse copy, find in original
-    CS280::BSTmap<int, int>::iterator it2   = map2.begin();
-    CS280::BSTmap<int, int>::iterator it2_e = map2.end();
-    for ( ; it2 != it2_e; ++it2 ) {
-        if ( map.find ( it2->Key() ) == map.end() ) {
-            std::cout << "Not found in a original\n";
-        } else {
-            if ( map.find( it2->Key() )->Value() != it2->Value() ) {
-                std::cout << "Found in a original, but value is wrong\n";
-            }
-        }
+  // traverse copy, find in original
+  CS280::BSTmap<int, int>::iterator it2 = map2.begin();
+  CS280::BSTmap<int, int>::iterator it2_e = map2.end();
+  for (; it2 != it2_e; ++it2) {
+    if (map.find(it2->Key()) == map.end()) {
+      std::cout << "Not found in a original\n";
+    } else {
+      if (map.find(it2->Key())->Value() != it2->Value()) {
+        std::cout << "Found in a original, but value is wrong\n";
+      }
     }
+  }
 }
 
-// copy ctor basic tests 
+// copy ctor basic tests
 // delete copy, check original
 // expected output - original tree is as before
-void test11()
-{
-    int N = 20;
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );   // data to insert
-    std::iota( data.begin(), data.end(), 1 );
-    // insert N elements
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
-    simple_inserts( map, data );
+void test11() {
+  int N = 20;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N); // data to insert
+  std::iota(data.begin(), data.end(), 1);
+  // insert N elements
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
+  simple_inserts(map, data);
 
-    {
-        CS280::BSTmap<int,int> map2( map );
-    } // map2 deleted
+  { CS280::BSTmap<int, int> map2(map); } // map2 deleted
 
-
-    //print original
-    CS280::BSTmap<int, int>::iterator it   = map.begin();
-    CS280::BSTmap<int, int>::iterator it_e = map.end();
-    for ( ; it != it_e; ++it ) {
-        std::cout << it->Key() << " --> " << it->Value() << std::endl;
-    }
+  // print original
+  CS280::BSTmap<int, int>::iterator it = map.begin();
+  CS280::BSTmap<int, int>::iterator it_e = map.end();
+  for (; it != it_e; ++it) {
+    std::cout << it->Key() << " --> " << it->Value() << std::endl;
+  }
 }
 
 // assignment basic tests
 // expected output - none
-void test12()
-{
-    // random map
-    int N = 1000;
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );   // data to insert
-    std::iota( data.begin(), data.end(), 1 );
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
+void test12() {
+  // random map
+  int N = 1000;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N); // data to insert
+  std::iota(data.begin(), data.end(), 1);
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
 
-    // insert some number of elements between N/2 and N
-    std::random_device                              rd;
-    std::mt19937                                    gen( rd() );
-    std::uniform_int_distribution<unsigned int>     dis( N/2, N );
-    data.resize( dis( gen ) );
-    simple_inserts( map, data );
+  // insert some number of elements between N/2 and N
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<unsigned int> dis(N / 2, N);
+  data.resize(dis(gen));
+  simple_inserts(map, data);
 
-    // random map2
-    CS280::BSTmap<int,int> map2;
-    std::vector<int> data2( N );   // data to insert
-    std::iota( data2.begin(), data2.end(), 1 );
-    std::shuffle( data2.begin(), data2.end(), std::mt19937{std::random_device{}()} );
+  // random map2
+  CS280::BSTmap<int, int> map2;
+  std::vector<int> data2(N); // data to insert
+  std::iota(data2.begin(), data2.end(), 1);
+  std::shuffle(
+    data2.begin(),
+    data2.end(),
+    std::mt19937{std::random_device{}()}
+  );
 
-    // insert some number of elements between N/2 and N
-    data2.resize( dis( gen ) );
-    simple_inserts( map2, data2 );
+  // insert some number of elements between N/2 and N
+  data2.resize(dis(gen));
+  simple_inserts(map2, data2);
 
-    // now assign 
-    map2 = map;
+  // now assign
+  map2 = map;
 
-    // traverse original, find in copy
-    CS280::BSTmap<int, int>::iterator it   = map.begin();
-    CS280::BSTmap<int, int>::iterator it_e = map.end();
-    for ( ; it != it_e; ++it ) {
-        if ( map2.find( it->Key() ) == map2.end() ) {
-            std::cout << "Not found in a assigned\n";
-        } else {
-            if ( map2.find( it->Key() )->Value() != it->Value() ) {
-                std::cout << "Found in a assigned, but value is wrong\n";
-            }
-        }
+  // traverse original, find in copy
+  CS280::BSTmap<int, int>::iterator it = map.begin();
+  CS280::BSTmap<int, int>::iterator it_e = map.end();
+  for (; it != it_e; ++it) {
+    if (map2.find(it->Key()) == map2.end()) {
+      std::cout << "Not found in a assigned\n";
+    } else {
+      if (map2.find(it->Key())->Value() != it->Value()) {
+        std::cout << "Found in a assigned, but value is wrong\n";
+      }
     }
+  }
 
-    // traverse copy, find in original
-    CS280::BSTmap<int, int>::iterator it2   = map2.begin();
-    CS280::BSTmap<int, int>::iterator it2_e = map2.end();
-    for ( ; it2 != it2_e; ++it2 ) {
-        if ( map.find ( it2->Key() ) == map.end() ) {
-            std::cout << "Not found in a original\n";
-        } else {
-            if ( map.find( it2->Key() )->Value() != it2->Value() ) {
-                std::cout << "Found in a original, but value is wrong\n";
-            }
-        }
+  // traverse copy, find in original
+  CS280::BSTmap<int, int>::iterator it2 = map2.begin();
+  CS280::BSTmap<int, int>::iterator it2_e = map2.end();
+  for (; it2 != it2_e; ++it2) {
+    if (map.find(it2->Key()) == map.end()) {
+      std::cout << "Not found in a original\n";
+    } else {
+      if (map.find(it2->Key())->Value() != it2->Value()) {
+        std::cout << "Found in a original, but value is wrong\n";
+      }
     }
+  }
 }
 
-// assignment tests 
+// assignment tests
 // delete assigned, check original
 // expected output - original tree is as before
-void test13()
-{
-    int N = 20;
-    CS280::BSTmap<int,int> map;
-    std::vector<int> data( N );   // data to insert
-    std::iota( data.begin(), data.end(), 1 );
-    std::shuffle( data.begin(), data.end(), std::mt19937{std::random_device{}()} );
+void test13() {
+  int N = 20;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N); // data to insert
+  std::iota(data.begin(), data.end(), 1);
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
 
+  // insert N elements
+  simple_inserts(map, data);
+
+  {
+    int N2 = 200;
+    CS280::BSTmap<int, int> map2;
+    std::vector<int> data2(N2); // data to insert
+    std::iota(data2.begin(), data2.end(), 1);
+    std::shuffle(
+      data2.begin(),
+      data2.end(),
+      std::mt19937{std::random_device{}()}
+    );
     // insert N elements
-    simple_inserts( map, data );
+    simple_inserts(map2, data2);
+    map2 = map;
+  } // map2 deleted
 
-    {
-        int N2 = 200;
-        CS280::BSTmap<int,int> map2;
-        std::vector<int> data2( N2 );   // data to insert
-        std::iota( data2.begin(), data2.end(), 1 );
-        std::shuffle( data2.begin(), data2.end(), std::mt19937{std::random_device{}()} );
-        // insert N elements
-        simple_inserts( map2, data2 );
-        map2 = map;
-    } // map2 deleted
-
-
-    //print original
-    CS280::BSTmap<int, int>::iterator it   = map.begin();
-    CS280::BSTmap<int, int>::iterator it_e = map.end();
-    for ( ; it != it_e; ++it ) {
-        std::cout << it->Key() << " --> " << it->Value() << std::endl;
-    }
-
+  // print original
+  CS280::BSTmap<int, int>::iterator it = map.begin();
+  CS280::BSTmap<int, int>::iterator it_e = map.end();
+  for (; it != it_e; ++it) {
+    std::cout << it->Key() << " --> " << it->Value() << std::endl;
+  }
 }
 
 void (*pTests[])(void) = {
-    test0,test1,test2,test3,test4,test5,test6,test7,test8,test9,test10,test11,test12,test13,
+  test0,
+  test1,
+  test2,
+  test3,
+  test4,
+  test5,
+  test6,
+  test7,
+  test8,
+  test9,
+  test10,
+  test11,
+  test12,
+  test13,
 };
 
-int main(int argc, char **argv) {
-    if (argc!=2) return 1;
-    else {
-        int test = 0;
-        std::sscanf(argv[1],"%i",&test);
-        pTests[test]();
-    }
-    return 0;
-} 
+int main(int argc, char** argv) {
+  if (argc != 2) {
+    return 1;
+  } else {
+    int test = 0;
+    std::sscanf(argv[1], "%i", &test);
+    pTests[test]();
+  }
+  return 0;
+}

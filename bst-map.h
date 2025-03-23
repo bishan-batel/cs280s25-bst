@@ -78,143 +78,250 @@ using iptr = std::intptr_t;
 
 namespace CS280 {
 
+  /**
+   * @brief Binary Search Tree
+   *
+   * @tparam K Key
+   * @tparam V Value
+   */
   template<typename K, typename V>
   class BSTmap {
-    class BSTmap_iterator;
-    class BSTmap_iterator_const;
 
   public:
 
-    // standard names for iterator types
-    using iterator = BSTmap_iterator;
-    using const_iterator = BSTmap_iterator_const;
+    class iterator;
+    class const_iterator;
 
+    /**
+     * @class Node
+     * @brief BST Node
+     */
     class Node {
     public:
 
-      Node(K k, V val, Node* p, int h, int b, Node* l, Node* r);
+      /**
+       * @brief Normal constructor
+       */
+      Node(K k, V val, Node* p, usize h, i32 b, Node* l, Node* r);
 
       Node(const Node&) = delete;
 
+      ~Node();
+
       auto operator=(const Node&) -> Node& = delete;
 
-      const K& Key() const;        // return a const reference
+      /**
+       * @brief Gets the key stored
+       */
+      auto Key() const -> const K&; // return a const reference
 
-      V& Value();                  // return a reference
+      /**
+       * @brief Gets the value stored
+       */
+      auto Value() -> V&; // return a reference
 
-      [[nodiscard]] Node* first(); // minimum - follow left as far as possible
+      /**
+       * @brief Gets the leftmost node
+       */
+      [[nodiscard]] auto first()
+        -> Node*; // minimum - follow left as far as possible
 
-      Node* last();                // maximum - follow right as far as possible
+      /**
+       * @brief Gets the rightmost node
+       */
+      auto last() -> Node*; // maximum - follow right as far as possible
 
-      Node* increment();           // successor
+      /**
+       * @brief Gets the successor node
+       */
+      auto successor() -> Node*; // successor
 
-      Node* decrement();           // predecessor
+      /**
+       * @brief Gets the predecessor Node
+       */
+      auto decrement() -> Node*; // predecessor
 
-      void print(std::ostream& os) const;
+      /**
+       * @brief Prints to stream
+       */
+      auto print(std::ostream& os) const -> void;
 
     private:
 
+      /**
+       * @brief Clones a new node on the heap
+       */
+      auto clone() const -> Node*;
+
+      /**
+       * @brief Creates & adds a child with the given key and value
+       */
+      auto add_child(K key, V value) -> Node&;
+
+      /**
+       * @brief Recomputes the height (recurses up)
+       */
+      auto recalc_height() -> void;
+
       K key;
       V value;
+      Node* parent{nullptr};
       usize height;
       i32 balance; // optional
-      Node* parent{nullptr};
       Node* left{nullptr};
       Node* right{nullptr};
 
       friend class BSTmap;
     };
 
-  private:
-
-    class BSTmap_iterator {
-      Node* p_node;
-
+    class iterator {
     public:
 
-      BSTmap_iterator(Node* p = nullptr);
-      BSTmap_iterator& operator=(const BSTmap_iterator& rhs);
-      BSTmap_iterator& operator++();
-      BSTmap_iterator operator++(int);
-      Node& operator*();
-      Node* operator->();
-      bool operator!=(const BSTmap_iterator& rhs);
-      bool operator==(const BSTmap_iterator& rhs);
+      iterator(Node* p = nullptr);
+
+      auto operator++() -> iterator&;
+
+      auto operator++(int) -> iterator;
+
+      [[nodiscard]] auto operator*() const -> Node&;
+
+      auto operator->() const -> Node*;
+
+      [[nodiscard]] auto operator!=(const iterator& rhs) const -> bool;
+
+      [[nodiscard]] auto operator==(const iterator& rhs) const -> bool;
+
       friend class BSTmap;
+
+    private:
+
+      Node* node;
     };
 
-    class BSTmap_iterator_const {
-      Node* p_node;
-
+    class const_iterator {
     public:
 
-      BSTmap_iterator_const(Node* p = nullptr);
+      const_iterator(Node* p = nullptr);
 
-      auto operator=(const BSTmap_iterator_const& rhs
-      ) -> BSTmap_iterator_const&;
+      auto operator++() -> const_iterator&;
 
-      auto operator++() -> BSTmap_iterator_const&;
+      auto operator++(int) -> const_iterator;
 
-      auto operator++(int) -> BSTmap_iterator_const;
+      auto operator*() const -> const Node&;
 
-      auto operator*() -> const Node&;
+      auto operator->() const -> const Node*;
 
-      auto operator->() -> const Node*;
+      auto operator!=(const const_iterator& rhs) const -> bool;
 
-      auto operator!=(const BSTmap_iterator_const& rhs) -> bool;
-
-      auto operator==(const BSTmap_iterator_const& rhs) -> bool;
+      auto operator==(const const_iterator& rhs) const -> bool;
 
       friend class BSTmap;
+
+    private:
+
+      Node* node;
     };
 
-    // BSTmap implementation
-    Node* pRoot = nullptr;
-    unsigned int size_ = 0;
-    // end iterators are same for all BSTmaps, thus static
-    // make BSTmap_iterator a friend
-    // to allow BSTmap_iterator to access end iterators
-    static BSTmap_iterator end_it;
-    static BSTmap_iterator_const const_end_it;
+    /**
+     * @brief Iterator at the end of every BST
+     */
+    static const iterator end_it;
 
-  public:
+    /**
+     * @brief Const Iterator at the end of every BST
+     */
+    static const const_iterator const_end_it;
 
+    /**
+     * @brief Default constructor
+     */
     BSTmap();
 
+    /**
+     * @brief Copy constructor
+     *
+     * @param rhs
+     */
     BSTmap(const BSTmap& rhs);
 
-    BSTmap& operator=(const BSTmap& rhs);
+    /**
+     * @brief Move constructor
+     *
+     * @param from
+     */
+    BSTmap(BSTmap&& from);
 
+    /**
+     * @brief Copy assignment
+     */
+    auto operator=(const BSTmap& rhs) -> BSTmap&;
+
+    /**
+     * @brief Move assignment
+     *
+     * @param rhs
+     */
+    auto operator=(BSTmap&& rhs) -> BSTmap&;
+
+    /**
+     * @brief Destructor
+     */
     virtual ~BSTmap();
 
-    std::size_t size();
+    /**
+     * @brief How many elements are in the tree
+     */
+    auto size() -> usize;
 
-    // value setter and getter
-    V& operator[](const K& key);
+    /**
+     * @brief Is the size 0
+     */
+    auto empty() -> bool;
 
-    // next method doesn't make sense
-    // because operator[] inserts a non-existing element
-    // which is not allowed on const maps
-    // V operator[](int key) const;
+    /**
+     * @brief Value getter and setter, creates key if it does not exist
+     */
+    auto operator[](const K& key) -> V&;
 
-    // BSTmap methods dealing with non-const iterator
-    auto begin() -> BSTmap_iterator;
+    /**
+     * @brief Beginning iterator (mutable)
+     */
+    auto begin() -> iterator;
 
-    auto end() -> BSTmap_iterator;
+    /**
+     * @brief End iterator (mutable)
+     */
+    auto end() -> iterator;
 
-    auto find(const K& key) -> BSTmap_iterator;
+    /**
+     * @brief Attempts to find an iterator pointing to a node in this BST that
+     * has the given key
+     */
+    auto find(const K& key) -> iterator;
 
-    auto erase(BSTmap_iterator it) -> void;
+    /**
+     * @brief Attempts to erase the node represented by the given iterator
+     */
+    auto erase(iterator it) -> void;
 
-    // BSTmap methods dealing with const iterator
-    auto begin() const -> BSTmap_iterator_const;
+    /**
+     * @brief Beginning iterator (const)
+     */
+    auto begin() const -> const_iterator;
 
-    auto end() const -> BSTmap_iterator_const;
+    /**
+     * @brief End iterator (const)
+     */
+    auto end() const -> const_iterator;
 
-    auto find(const K& key) const -> BSTmap_iterator_const;
+    /**
+     * @brief Attempts to find an iterator pointing to a node in this BST that
+     * has the given key
+     */
+    auto find(const K& key) const -> const_iterator;
 
     // do not need this one (why)
-    // BSTmap_iterator_const erase(BSTmap_iterator& it) const;
+    // const_iterator erase(iterator& it) const;
 
     auto print(std::ostream& os, bool print_value = false) const -> void;
 
@@ -222,22 +329,27 @@ namespace CS280 {
 
     auto sanityCheck() -> bool;
 
-    // inner class (BSTmap_iterator) doesn't have any special priveleges
+    // inner class (iterator) doesn't have any special priveleges
     // in accessing private data/methods of the outer class (BSTmap)
-    // so need friendship to allow BSTmap_iterator to access private
+    // so need friendship to allow iterator to access private
     // "BSTmap::end_it" BTW - same is true for outer class accessing inner class
     // private data
-    friend class BSTmap_iterator;
-    friend class BSTmap_iterator_const;
+    friend class iterator;
+    friend class const_iterator;
 
   private:
 
-    // ...
+    [[nodiscard]] auto getdepth(const Node& node) const -> usize;
+
+    auto index(Node* node, const K& key) const -> Node*;
+
+    Node* root = nullptr;
+    usize count = 0;
   };
 
   // notice that it doesn't need to be friend
   template<typename K, typename V>
-  std::ostream& operator<<(std::ostream& os, const BSTmap<K, V>& map);
+  auto operator<<(std::ostream& os, const BSTmap<K, V>& map) -> std::ostream&;
 } // namespace CS280
 
 #ifndef BSTMAP_CPP
