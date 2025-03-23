@@ -104,10 +104,19 @@ namespace CS280 {
        */
       Node(K k, V val, Node* p, usize h, i32 b, Node* l, Node* r);
 
+      /**
+       * @brief Copy constructor
+       */
       Node(const Node&) = delete;
 
+      /**
+       * @brief Destructor
+       */
       ~Node();
 
+      /**
+       * @brief Copy assignment
+       */
       auto operator=(const Node&) -> Node& = delete;
 
       /**
@@ -163,32 +172,85 @@ namespace CS280 {
        */
       auto recalc_height() -> void;
 
+      /**
+       * @brief Key data
+       */
       K key;
+
+      /**
+       * @brief Value data
+       */
       V value;
+
+      /**
+       * @brief Pointer to the parent
+       */
       Node* parent{nullptr};
+
+      /**
+       * @brief Height of this node
+       */
       usize height;
-      i32 balance; // optional
+
+      /**
+       * @brief Balance of the node
+       */
+      i32 balance;
+
+      /**
+       * @brief Left child
+       */
       Node* left{nullptr};
+
+      /**
+       * @brief Right child
+       */
       Node* right{nullptr};
 
       friend class BSTmap;
     };
 
+    /**
+     * @class iterator
+     * @brief Iterator for a non-const BST
+     *
+     */
     class iterator {
     public:
 
+      /**
+       * @brief Default / normal constructor
+       */
       iterator(Node* p = nullptr);
 
+      /**
+       * @brief Pre-increment, move to the next
+       */
       auto operator++() -> iterator&;
 
+      /**
+       * @brief Post-increment, returns the current and after move to the next
+       */
       auto operator++(int) -> iterator;
 
+      /**
+       * @brief Gets the inner node
+       */
       [[nodiscard]] auto operator*() const -> Node&;
 
+      /**
+       * @brief Gets the inner node
+       */
       auto operator->() const -> Node*;
 
+      /**
+       * @brief Checks if this and another iterator are not equal
+       */
       [[nodiscard]] auto operator!=(const iterator& rhs) const -> bool;
 
+      /**
+       * @brief Checks if this and another iterator are equal
+       */
       [[nodiscard]] auto operator==(const iterator& rhs) const -> bool;
 
       friend class BSTmap;
@@ -198,27 +260,55 @@ namespace CS280 {
       Node* node;
     };
 
+    /**
+     * @class const_iterator
+     * @brief Iterator for a const BST
+     */
     class const_iterator {
     public:
 
+      /**
+       * @brief Default/Normal Constructor
+       */
       const_iterator(Node* p = nullptr);
 
+      /**
+       * @brief Pre-increment
+       */
       auto operator++() -> const_iterator&;
 
+      /**
+       * @brief Post-increment
+       */
       auto operator++(int) -> const_iterator;
 
+      /**
+       * @brief Gets a refereence to the inner node
+       */
       auto operator*() const -> const Node&;
 
+      /**
+       * @brief Gets the inner node
+       */
       auto operator->() const -> const Node*;
 
+      /**
+       * @brief Checks if this and another iter is not equal
+       */
       auto operator!=(const const_iterator& rhs) const -> bool;
 
+      /**
+       * @brief Checks if this and another iter is equal
+       */
       auto operator==(const const_iterator& rhs) const -> bool;
 
       friend class BSTmap;
 
     private:
 
+      /**
+       * @brief Pointer to the given node
+       */
       Node* node;
     };
 
@@ -323,31 +413,47 @@ namespace CS280 {
     // do not need this one (why)
     // const_iterator erase(iterator& it) const;
 
+    /**
+     * @brief Prints this to an output stream
+     */
     auto print(std::ostream& os, bool print_value = false) const -> void;
 
+    /**
+     * @brief Gets the edge symbol character
+     */
     auto getedgesymbol(const Node* node) const -> char;
 
     auto sanityCheck() -> bool;
 
-    // inner class (iterator) doesn't have any special priveleges
-    // in accessing private data/methods of the outer class (BSTmap)
-    // so need friendship to allow iterator to access private
-    // "BSTmap::end_it" BTW - same is true for outer class accessing inner class
-    // private data
     friend class iterator;
     friend class const_iterator;
 
   private:
 
+    /**
+     * @brief Gets how deep the given node is
+     */
     [[nodiscard]] auto getdepth(const Node& node) const -> usize;
 
+    /**
+     * @brief Gets the node with the given key, or what its parent should be
+     */
     auto index(Node* node, const K& key) const -> Node*;
 
+    /**
+     * @brief Root of the tree
+     */
     Node* root = nullptr;
+
+    /**
+     * @brief Size of the tree
+     */
     usize count = 0;
   };
 
-  // notice that it doesn't need to be friend
+  /**
+   * @brief Prints out the bst map to the stream
+   */
   template<typename K, typename V>
   auto operator<<(std::ostream& os, const BSTmap<K, V>& map) -> std::ostream&;
 } // namespace CS280
