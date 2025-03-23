@@ -113,19 +113,18 @@ void test5() {
 // try larger N
 // check with Dr. Memory - better catch error now
 void test6() {
-  // int N = 100;
-  // CS280::BSTmap<int, int> map;
-  // std::vector<int> data(N);
-  // std::iota(data.begin(), data.end(), 1);
-  // std::shuffle(data.begin(), data.end(),
-  // std::mt19937{std::random_device{}()});
+  int N = 100;
+  CS280::BSTmap<int, int> map;
+  std::vector<int> data(N);
+  std::iota(data.begin(), data.end(), 1);
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
 
-  // simple_inserts(map, data);
-  // std::cout << map << std::endl;
+  simple_inserts(map, data);
+  std::cout << map << std::endl;
 
-  //// reshuffle data
-  // std::shuffle(data.begin(), data.end(),
-  // std::mt19937{std::random_device{}()}); simple_deletes(map, data); // delete
+  // reshuffle data
+  std::shuffle(data.begin(), data.end(), std::mt19937{std::random_device{}()});
+  simple_deletes(map, data); // delete
   // in reverse order std::cout << map << std::endl;
 }
 
